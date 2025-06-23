@@ -11,7 +11,6 @@ module.exports = {
         CONNECTION: process.env.CONNECTIOn ?? "mongodb"
     },
     JWT: {
-        SECRET: process.env.JWT_SECRET,
         EXPIRE_IN: process.env.JWT_EXPIRES_IN
     }
 }

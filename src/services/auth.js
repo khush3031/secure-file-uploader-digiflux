@@ -1,11 +1,12 @@
 const { JWT } = require("../../config/config");
 const User = require("../models/user")
 const jwt = require("jsonwebtoken")
+const fs = require("fs")
+const path = require("path")
 
 const generateToken = (user) => {
-  return jwt.sign({ id: user._id, email: user.email }, JWT.SECRET, {
-    expiresIn: JWT.EXPIRE_IN
-  });
+    const privateKey = fs.readFileSync(path.join(__dirname, "../../authKeys/jwtPrivate.key"), 'utf8')
+  return jwt.sign({ id: user._id, email: user.email }, privateKey, { algorithm: 'RS256', expiresIn: process.env.JWT_EXPIRES_IN })
 };
 
 

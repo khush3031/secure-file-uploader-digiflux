@@ -7,7 +7,9 @@ const fileSchema = new mongoose.Schema({
     mimetype: { type: String },
     extractedText: { type: String },
     uploadedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
-    uploadDate: { type: Date, default: Date.now }
+    uploadDate: { type: Date, default: Date.now },
+    deletedAt:  { type: Date },
+    deletedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'user' }
 }, {
     timestamps: true
 });

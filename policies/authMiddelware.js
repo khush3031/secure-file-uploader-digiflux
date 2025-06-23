@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const User = require('../src/models/user');
 const { JWT } = require('../config/config');
+const fs = require("fs")
+const path = require("path")
 
 const authMiddleware = async (req, res, next) => {
   try {
@@ -11,7 +13,8 @@ const authMiddleware = async (req, res, next) => {
     }
     
     const token = authHeader.replace('jwt ', '')
-    const decoded = jwt.verify(token, JWT.SECRET);
+    const pubKey = fs.readFileSync(path.join(__dirname, "../authKeys/jwtPublic.key"), 'utf-8')
+    const decoded = jwt.verify(token, pubKey);
     const user = await User.findById(decoded.id).select('-password');
     if (!user) return res.status(401).json({ message: 'User not found, or invalid user.' });
 
